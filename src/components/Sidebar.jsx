@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getAllProject } from "../redux/projectSlice";
 import { allProjectsData } from "../utils/db";
 
 function Sidebar() {
-	allProjectsData;
-	const [projectsData, setProjectsData] = useState([]);
-	useEffect(() => {
-		setProjectsData(allProjectsData);
-	}, []);
+	const projectsData = useSelector(getAllProject);
 	console.log("setProjectsData");
 	return (
 		<>
@@ -23,7 +21,7 @@ function Sidebar() {
 						<button className="text-4xl">+</button>
 					</div>
 					<div className="listContainer p-3 pt-0">
-						{projectsData.map((project) => (
+						{projectsData?.map((project) => (
 							<Link to={`/tasks/${project.projectId}`} key={project.projectId}>
 								<div className=" my-2 bg-blue-100 rounded text-center shadow-md hover:bg-blue-200 cursor-pointer">
 									<p className=" text-xl">{project.name}</p>
