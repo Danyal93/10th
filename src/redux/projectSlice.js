@@ -54,103 +54,102 @@ const initialState = {
 			name: "project 2",
 		},
 	],
-	allProjectsData: 
-	// [],
-	[
-		{
-			projectId: 1,
-			name: "project 1",
-			statusData: [
-				{
-					id: 1,
-					name: "Todo",
-					tasks: [
-						{
-							id: 1,
-							taskHeading: "taskHeading 1",
-							assignedTo: "D",
-							tags: ["bugs", "DIY"],
-							priority: "H",
-							dueDate: "25 Aug",
-						},
-						{
-							id: 2,
-							taskHeading: "taskHeading 2",
-							assignedTo: "M",
-							tags: ["feature", "LCS"],
-							priority: "L",
-							dueDate: "28 Jan",
-						},
-					],
-				},
-				{
-					id: 2,
-					name: "Inprogress",
-					tasks: [
-						{
-							id: 1,
-							taskHeading: "taskHeading 3",
-							assignedTo: "DM",
-							tags: ["idea", "DIY"],
-							priority: "H",
-							dueDate: "25 Aug",
-						},
-					],
-				},
-			],
-		},
-		{
-			projectId: 2,
-			name: "project 2",
-			statusData: [
-				{
-					id: 1,
-					name: "Todo",
-					tasks: [
-						{
-							id: 1,
-							taskHeading: "taskHeading 1",
-							assignedTo: "D",
-							tags: ["bugs", "DIY"],
-							priority: "H",
-							dueDate: "25 Aug",
-						},
-					],
-				},
-				{
-					id: 2,
-					name: "Inprogress",
-					tasks: [
-						{
-							id: 1,
-							taskHeading: "taskHeading 3",
-							assignedTo: "DM",
-							tags: ["idea", "DIY"],
-							priority: "H",
-							dueDate: "25 Aug",
-						},
-						{
-							id: 2,
-							taskHeading: "taskHeading 4",
-							assignedTo: "MD",
-							tags: ["epic", "LCS"],
-							priority: "L",
-							dueDate: "28 Jan",
-						},
+	allProjectsData: [],
+	// [
+	// 	{
+	// 		projectId: 1,
+	// 		name: "project 1",
+	// 		statusData: [
+	// 			{
+	// 				id: 1,
+	// 				name: "Todo",
+	// 				tasks: [
+	// 					{
+	// 						id: 1,
+	// 						taskHeading: "taskHeading 1",
+	// 						assignedTo: "D",
+	// 						tags: ["bugs", "DIY"],
+	// 						priority: "H",
+	// 						dueDate: "25 Aug",
+	// 					},
+	// 					{
+	// 						id: 2,
+	// 						taskHeading: "taskHeading 2",
+	// 						assignedTo: "M",
+	// 						tags: ["feature", "LCS"],
+	// 						priority: "L",
+	// 						dueDate: "28 Jan",
+	// 					},
+	// 				],
+	// 			},
+	// 			{
+	// 				id: 2,
+	// 				name: "Inprogress",
+	// 				tasks: [
+	// 					{
+	// 						id: 1,
+	// 						taskHeading: "taskHeading 3",
+	// 						assignedTo: "DM",
+	// 						tags: ["idea", "DIY"],
+	// 						priority: "H",
+	// 						dueDate: "25 Aug",
+	// 					},
+	// 				],
+	// 			},
+	// 		],
+	// 	},
+	// 	{
+	// 		projectId: 2,
+	// 		name: "project 2",
+	// 		statusData: [
+	// 			{
+	// 				id: 1,
+	// 				name: "Todo",
+	// 				tasks: [
+	// 					{
+	// 						id: 1,
+	// 						taskHeading: "taskHeading 1",
+	// 						assignedTo: "D",
+	// 						tags: ["bugs", "DIY"],
+	// 						priority: "H",
+	// 						dueDate: "25 Aug",
+	// 					},
+	// 				],
+	// 			},
+	// 			{
+	// 				id: 2,
+	// 				name: "Inprogress",
+	// 				tasks: [
+	// 					{
+	// 						id: 1,
+	// 						taskHeading: "taskHeading 3",
+	// 						assignedTo: "DM",
+	// 						tags: ["idea", "DIY"],
+	// 						priority: "H",
+	// 						dueDate: "25 Aug",
+	// 					},
+	// 					{
+	// 						id: 2,
+	// 						taskHeading: "taskHeading 4",
+	// 						assignedTo: "MD",
+	// 						tags: ["epic", "LCS"],
+	// 						priority: "L",
+	// 						dueDate: "28 Jan",
+	// 					},
 
-						{
-							id: 3,
-							taskHeading: "taskHeading 2",
-							assignedTo: "M",
-							tags: ["feature", "LCS"],
-							priority: "L",
-							dueDate: "28 Jan",
-						},
-					],
-				},
-			],
-		},
-	],
+	// 					{
+	// 						id: 3,
+	// 						taskHeading: "taskHeading 2",
+	// 						assignedTo: "M",
+	// 						tags: ["feature", "LCS"],
+	// 						priority: "L",
+	// 						dueDate: "28 Jan",
+	// 					},
+	// 				],
+	// 			},
+	// 		],
+	// 	},
+	// ],
 };
 
 export const getAllProjectAsync = createAsyncThunk("project/getAllProjectAsync", async (args, { rejectWithValue }) => {
@@ -232,6 +231,10 @@ const projectSlice = createSlice({
 			const index = state.allProjectsData.findIndex((d) => d.projectId === action.payload.projectId);
 			state.allProjectsData[index].statusData = action.payload.data;
 		},
+		addProject: (state, action) => {
+			const length = state.allProjectsData.length + 1;
+			state.allProjectsData.push({ name: /* action.payload */ `project ${length}`, projectId: length, statusData: [] });
+		},
 		deleteProject: (state, action) => {
 			state.projectList = state.projectList.filter((project) => project.id !== action.payload);
 		},
@@ -295,9 +298,14 @@ const projectSlice = createSlice({
 	////////////
 });
 
-export const { updateSelectedProject, addTask, addStatus } = projectSlice.actions;
+export const { updateSelectedProject, addTask, addStatus, addProject } = projectSlice.actions;
 export const getAllProject = (state) => {
-	return state.project.projectList;
+	return state.project.allProjectsData.map((project) => {
+		return {
+			projectId: project.projectId,
+			name: project.name,
+		};
+	});
 };
 export const getAllProjectData = (state) => {
 	return state.project.allProjectsData;

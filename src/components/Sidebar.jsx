@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAllProject } from "../redux/projectSlice";
-import { allProjectsData } from "../utils/db";
+import { addProject, getAllProject } from "../redux/projectSlice";
 
 function Sidebar() {
 	const projectsData = useSelector(getAllProject);
 	console.log("setProjectsData");
+	const dispatch = useDispatch();
+	const handleAddProject = () => {
+		dispatch(addProject());
+	};
 	return (
 		<>
 			<div className="sidebar bg-gray-100  w-2/12  overflow-y-scroll no-scrollbar">
@@ -18,7 +20,9 @@ function Sidebar() {
 				<div className="list">
 					<div className="heading p-1 px-3 mx-1 flex justify-between items-center rounded bg-blue-200 text-slate-900 shadow hover:bg-blue-300">
 						<p className=" text-3xl font-bold ">Projects</p>
-						<button className="text-4xl">+</button>
+						<button onClick={handleAddProject} className="text-4xl">
+							+
+						</button>
 					</div>
 					<div className="listContainer p-3 pt-0">
 						{projectsData?.map((project) => (

@@ -8,9 +8,9 @@ import StatusInputForm from "./StatusInputForm";
 function Content() {
 	const { projectId } = useParams();
 	console.log(projectId);
-	const allProjectsData = useSelector(getAllProjectData);
+	const _data = useSelector(getAllProjectData);
 
-	const projectData = allProjectsData.find((d) => d.projectId === Number(projectId));
+	const projectData = _data.find((d) => d.projectId === Number(projectId));
 	const allStatusData = projectData?.statusData ?? [];
 
 	return (
