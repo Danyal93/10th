@@ -54,7 +54,9 @@ const initialState = {
 			name: "project 2",
 		},
 	],
-	allProjectsData: [
+	allProjectsData: 
+	// [],
+	[
 		{
 			projectId: 1,
 			name: "project 1",
@@ -222,11 +224,13 @@ const projectSlice = createSlice({
 		updateSelectedProject: (state, action) => {
 			state.selectedProject = action.payload;
 		},
-		addProject: (state, action) => {
-			state.projectList.push({
-				...action.payload,
-				id: (state.projectList[state.projectList.length - 1]?.id ?? 0) + 1,
-			});
+		addTask: (state, action) => {
+			const index = state.allProjectsData.findIndex((d) => d.projectId === action.payload.projectId);
+			state.allProjectsData[index].statusData = action.payload.data;
+		},
+		addStatus: (state, action) => {
+			const index = state.allProjectsData.findIndex((d) => d.projectId === action.payload.projectId);
+			state.allProjectsData[index].statusData = action.payload.data;
 		},
 		deleteProject: (state, action) => {
 			state.projectList = state.projectList.filter((project) => project.id !== action.payload);
@@ -291,7 +295,7 @@ const projectSlice = createSlice({
 	////////////
 });
 
-export const { updateSelectedProject, addProject } = projectSlice.actions;
+export const { updateSelectedProject, addTask, addStatus } = projectSlice.actions;
 export const getAllProject = (state) => {
 	return state.project.projectList;
 };

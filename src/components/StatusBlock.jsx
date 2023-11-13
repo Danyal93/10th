@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTask } from "../redux/projectSlice";
 import TaskCard from "./TaskCard";
 
-function StatusBlock({ allStatusData, statusData, index, setAllStatusData }) {
+function StatusBlock({ projectId, allStatusData, statusData, index, setAllStatusData }) {
 	const [taskFormOpened, setTaskFormOpened] = useState(false);
+	const dispatch = useDispatch();
 	const [inputData, setInputData] = useState({
 		taskHeading: "",
 		assignedTo: "",
@@ -17,11 +20,11 @@ function StatusBlock({ allStatusData, statusData, index, setAllStatusData }) {
 	};
 	const handleAddTask = (e) => {
 		setTaskFormOpened(false);
-		const newAllStatusData = allStatusData.map((d) => {
+		const newData = allStatusData.map((d) => {
 			if (d.id !== statusData.id) return d;
 			else return { ...d, tasks: [...d.tasks, { ...inputData, id: d.tasks.length }] };
 		});
-		setAllStatusData(newAllStatusData);
+		dispatch(addTask({ projectId: Number(projectId), data: newData }));
 	};
 	return (
 		<div key={index} className="statusBlock flex flex-col gap-3  w-56">
