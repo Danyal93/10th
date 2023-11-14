@@ -19,6 +19,7 @@ function StatusBlock({ projectId, allStatusData, statusData, index, setAllStatus
 		});
 	};
 	const handleAddTask = (e) => {
+		e.preventDefault();
 		setTaskFormOpened(false);
 		const newData = allStatusData.map((d) => {
 			if (d.id !== statusData.id) return d;
@@ -36,34 +37,36 @@ function StatusBlock({ projectId, allStatusData, statusData, index, setAllStatus
 				<TaskCard key={ind} index={index} task={task} />
 			))}
 			{taskFormOpened ? (
-				<div className="taskInput p-3 flex flex-col gap-4 bg-gray-100 shadow-md">
-					<div className="inputGroup flex justify-between items-center w-full">
-						<label className=" block" htmlFor="taskHeading">
-							Heading
-						</label>
-						<input onChange={handleInputChange} className=" block w-2/3" id="taskHeading" type="text" />
+				<form onSubmit={handleAddTask}>
+					<div className="taskInput p-3 flex flex-col gap-4 bg-gray-100 shadow-md">
+						<div className="inputGroup flex justify-between items-center w-full">
+							<label className=" block" htmlFor="taskHeading">
+								Heading
+							</label>
+							<input onChange={handleInputChange} className=" block w-2/3" id="taskHeading" type="text" />
+						</div>
+						<div className="inputGroup flex justify-between items-center w-full">
+							<label className=" block" htmlFor="assignedTo">
+								AssignTo
+							</label>
+							<input onChange={handleInputChange} className=" block w-2/3" id="assignedTo" type="text" />
+						</div>
+						<div className="inputGroup flex justify-between items-center w-full">
+							<label className=" block" htmlFor="priority">
+								priority
+							</label>
+							<input onChange={handleInputChange} className=" block w-2/3" id="priority" type="text" />
+						</div>
+						<div className="btnGroup flex items-center justify-between">
+							<button type="submit" className="text-center w-full">
+								submit
+							</button>
+							<button className="text-center w-full text-red-400" onClick={() => setTaskFormOpened(false)}>
+								cancel
+							</button>
+						</div>
 					</div>
-					<div className="inputGroup flex justify-between items-center w-full">
-						<label className=" block" htmlFor="assignedTo">
-							assignedTo
-						</label>
-						<input onChange={handleInputChange} className=" block w-2/3" id="assignedTo" type="text" />
-					</div>
-					<div className="inputGroup flex justify-between items-center w-full">
-						<label className=" block" htmlFor="priority">
-							priority
-						</label>
-						<input onChange={handleInputChange} className=" block w-2/3" id="priority" type="text" />
-					</div>
-					<div className="btnGroup flex items-center justify-between">
-						<button className="text-center w-full" onClick={() => handleAddTask()}>
-							submit
-						</button>
-						<button className="text-center w-full text-red-400" onClick={() => setTaskFormOpened(false)}>
-							cancel
-						</button>
-					</div>
-				</div>
+				</form>
 			) : (
 				<div onClick={() => setTaskFormOpened(true)} className="addTask p-1 bg-gray-200 text-center  hover:bg-gray-300 rounded shadow ">
 					<button>Add Task</button>
